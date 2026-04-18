@@ -48,10 +48,15 @@ if (msg.type === "SEND_SOL") {
 
         let response=await sendSol(senderw,msg.recipient,msg.amount,msg.network)
     
-        sendResponse({ 
-            success: true,
-            txid:response
-                 });
+        if (response.success==true && response.signature !==undefined) {
+
+            sendResponse({ success: true,txid:response.signature});
+
+        }
+        else {
+            sendResponse({ success:false,txid:response.signature});
+
+        }
     
   })()
 
